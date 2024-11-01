@@ -4,7 +4,6 @@
 <template>
   <div
     class="background"
-    :style="backgroundStyle"
   >
   </div>
 </template>

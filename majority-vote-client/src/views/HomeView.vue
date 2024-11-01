@@ -4,23 +4,27 @@ import ColorfulBackground from '../components/ColorfulBackground.vue'
 import AnswerBackground from '../components/AnswerBackground.vue'
 import TimerBar from '../components/TimerBar.vue'
 import "@fontsource/bebas-neue/400.css"
+import { getQuestion, submitAnswer } from '../services/apiService'
+import type { QuestionType } from '@/types'
 
-const question = ref('Do ants have lungs')
+const question = ref<QuestionType>()
 
-const leftOption = ref('Yes')
-const rightOption = ref('No')
+async function load() {
+  generateColors()
 
-function load() {
   // Reset the result
   result.value = undefined
 
-  question.value = 'Do ants have lungs'
+  question.value = await getQuestion()
 }
 
 const result = ref<number>()
 
-function submit(answer: 'left' | 'right') {
-  result.value = .1
+async function submit(answer: 'left' | 'right') {
+
+  const response = await submitAnswer(question.value!.questionId, answer)
+
+  result.value = response.percentage
 
   setTimeout(load, 6000)
 }
@@ -34,7 +38,7 @@ function generateColors() {
   leftColor.value = `hsl(${randomHue}deg 30% 90%)`
   rightColor.value = `hsl(${randomHue + 120}deg 30% 90%)`
 }
-generateColors()
+load()
 
 </script>
 
@@ -51,7 +55,7 @@ generateColors()
       <span
         class="text"
       >
-        {{ question }}?
+        {{ question?.question }}?
       </span>
       <div
         class="options content"
@@ -61,7 +65,7 @@ generateColors()
           class="left"
           @click="submit('left')"
         >
-          {{ leftOption }}
+          {{ question?.leftOption }}
         </span>
         <span
           class="center"
@@ -72,18 +76,18 @@ generateColors()
           class="right"
           @click="submit('right')"
         >
-          {{ rightOption }}
+          {{ question?.rightOption }}
         </span>
       </div>
       <div
         class="result content"
-        v-show="result"
+        v-if="result"
       >
         <span
           class="left"
           @click="submit('left')"
         >
-          {{ Math.round(result * 100, 1) }}%
+          {{ Math.round(result * 100) }}%
         </span>
         <span
           class="center"
@@ -94,7 +98,7 @@ generateColors()
           class="right"
           @click="submit('right')"
         >
-        {{ Math.round((1-result) * 100, 1) }}%
+        {{ Math.round((1-result) * 100) }}%
         </span>
       </div>
     </div>
