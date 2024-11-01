@@ -2,6 +2,7 @@ import { join } from 'path';
 import AutoLoad, {AutoloadPluginOptions} from '@fastify/autoload';
 import { FastifyPluginAsync, FastifyServerOptions } from 'fastify';
 import cors from '@fastify/cors'
+import { configureDatabase } from "./db.config";
 
 export interface AppOptions extends FastifyServerOptions, Partial<AutoloadPluginOptions> {
 
@@ -17,6 +18,8 @@ const app: FastifyPluginAsync<AppOptions> = async (
   // Place here your custom code!
 
   await fastify.register(cors)
+
+  configureDatabase(fastify)
 
   // Do not touch the following lines
 

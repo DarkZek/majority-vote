@@ -1,6 +1,6 @@
 export type QuestionType = {
   questionId: string,
-  question: string,
+  statement: string,
   leftOption: string,
   rightOption: string
 }

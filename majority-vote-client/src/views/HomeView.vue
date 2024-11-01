@@ -55,7 +55,7 @@ load()
       <span
         class="text"
       >
-        {{ question?.question }}?
+        {{ question?.statement }}?
       </span>
       <div
         class="options content"

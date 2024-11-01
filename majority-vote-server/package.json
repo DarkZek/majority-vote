@@ -12,7 +12,8 @@
     "build:ts": "tsc",
     "watch:ts": "tsc -w",
     "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
-    "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js"
+    "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js",
+    "typeorm:generate": "typeorm migration:create ./migration/migration"
   },
   "keywords": [],
   "author": "",
@@ -21,9 +22,13 @@
     "@fastify/autoload": "^6.0.0",
     "@fastify/cors": "^10.0.1",
     "@fastify/sensible": "^6.0.0",
+    "dotenv": "^16.4.5",
     "fastify": "^5.0.0",
     "fastify-cli": "^7.0.1",
-    "fastify-plugin": "^5.0.0"
+    "fastify-plugin": "^5.0.0",
+    "pg": "^8.13.1",
+    "typeorm": "^0.3.20",
+    "typeorm-fastify-plugin": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.1.0",
