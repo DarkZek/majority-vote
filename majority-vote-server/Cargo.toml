@@ -4,4 +4,13 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-rocket = "0.5.1"
+rocket = { version = "0.5.1", features = ["json"] }
+serde = "1.0"
+rocket_cors = "0.6.0"
+sea-orm = { version = "1.1.0", features = ["sqlx-postgres", "runtime-tokio"]}
+sea-orm-rocket = "0.5.4"
+async-trait = { version = "0.1" }
+
+[dependencies.rocket_db_pools]
+version = "0.2.0"
+features = ["deadpool_postgres"]
