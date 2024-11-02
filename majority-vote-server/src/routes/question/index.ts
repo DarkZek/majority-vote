@@ -4,15 +4,7 @@ import { Question } from "../../database/entity/question.entity"
 const questionRouter: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.get('/', async function (request, reply) {
     const result = await fastify.orm["typeorm"]
-      .getRepository(Question)
-      .createQueryBuilder()
-      .select('*')
-      .from(Question, 'questions')
-      .orderBy("RANDOM()")
-      .limit(1)
-      .getOne()
-
-    console.log(result)
+      .getRepository(Question).findOne({ where: { id: 'e6fa57b2-cf70-456d-b711-9e04b9c39891' }})
 
     return result
   })
@@ -24,15 +16,13 @@ const questionRouter: FastifyPluginAsync = async (fastify, opts): Promise<void> 
   })
 
   fastify.post('/', async function (request, reply) {
-    let question = new Question()
+    const question = new Question()
 
     question.leftOption = (request.body as any).leftOption
     question.rightOption = (request.body as any).rightOption
     question.statement = (request.body as any).statement
 
-    let result = await fastify.orm["typeorm"].getRepository(Question).insert(question)
-
-    console.log(result)
+    await fastify.orm["typeorm"].getRepository(Question).save(question)
 
     return question
   })
