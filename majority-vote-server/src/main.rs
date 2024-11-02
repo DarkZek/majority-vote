@@ -12,8 +12,11 @@ use crate::routes::get_question::get_question;
 
 #[launch]
 fn rocket() -> _ {
+
+    let port = std::env::var("PORT").unwrap_or(format!("3000")).parse::<usize>().unwrap();
+
     rocket::build()
-        .configure(rocket::Config::figment().merge(("port", 3001)))
+        .configure(rocket::Config::figment().merge(("port", port)))
         .attach(Db::init())
         // .attach(AdHoc::try_on_ignite("Migrations", run_migrations))
         .attach(CorsOptions::default().to_cors().unwrap())
