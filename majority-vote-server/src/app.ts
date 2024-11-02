@@ -1,21 +1,17 @@
 import { join } from 'path';
-import AutoLoad, {AutoloadPluginOptions} from '@fastify/autoload';
-import { FastifyPluginAsync, FastifyServerOptions } from 'fastify';
+import AutoLoad from '@fastify/autoload';
+import { FastifyPluginAsync, } from 'fastify';
 import cors from '@fastify/cors'
 import { configureDatabase } from "./db.config";
+import { TypeBoxTypeProvider, TypeBoxValidatorCompiler } from '@fastify/type-provider-typebox';
 
-export interface AppOptions extends FastifyServerOptions, Partial<AutoloadPluginOptions> {
-
-}
-// Pass --options via CLI arguments in command to enable these options.
-const options: AppOptions = {
-}
-
-const app: FastifyPluginAsync<AppOptions> = async (
+const app: FastifyPluginAsync = async (
     fastify,
     opts
 ): Promise<void> => {
-  // Place here your custom code!
+  fastify = fastify.withTypeProvider<TypeBoxTypeProvider>()
+  await fastify.setValidatorCompiler(TypeBoxValidatorCompiler)
+  await fastify
 
   await fastify.register(cors)
 
@@ -40,4 +36,4 @@ const app: FastifyPluginAsync<AppOptions> = async (
 };
 
 export default app;
-export { app, options }
+export { app }

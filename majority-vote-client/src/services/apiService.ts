@@ -10,7 +10,7 @@ export async function getQuestion(): Promise<QuestionType> {
 }
 
 export async function submitAnswer(questionId: string, answer: QuestionAnswer): Promise<QuestionResult> {
-  const response = await axios.post(`/question/${questionId}/answer`, { answer })
+  const response = await axios.post(`/question/${questionId}/answer`, { isLeft: answer === 'left' })
 
   return response.data
 }

@@ -1,5 +1,6 @@
 import plugin from "typeorm-fastify-plugin"
 import { Question } from "./database/entity/question.entity"
+import { Answer } from "./database/entity/answer.entity"
 import { FastifyInstance } from "fastify"
 import { DataSource } from "typeorm"
 
@@ -18,7 +19,7 @@ const dataSource = {
   migrations: [__dirname + "/migration/*.{js,ts}"],
   subscribers: [],
   migrationsRun: true,
-  entities: [Question],
+  entities: [Question, Answer],
 }
 
 export function configureDatabase(server: FastifyInstance) {
