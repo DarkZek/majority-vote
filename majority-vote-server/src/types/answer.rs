@@ -8,11 +8,11 @@ use rocket::serde::Deserialize;
 pub struct Model {
     #[sea_orm(primary_key)]
     #[serde(rename = "answerId")]
-    pub id: String,
+    pub id: Uuid,
     #[serde(rename = "questionId")]
-    pub question_id: String,
+    pub question_id: Uuid,
     #[serde(rename = "userId")]
-    pub user_id: String,
+    pub user_id: Uuid,
     #[serde(rename = "isLeft")]
     pub is_left: bool,
 }

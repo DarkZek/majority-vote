@@ -20,13 +20,23 @@ async function load() {
 
 const result = ref<number>()
 
+const loading = ref(false)
+
 async function submit(answer: 'left' | 'right') {
+
+  if (loading.value) {
+    return
+  }
+
+  loading.value = true
 
   const response = await submitAnswer(question.value!.questionId, answer)
 
   result.value = response.percentage
 
   setTimeout(load, 6000)
+
+  loading.value = false
 }
 
 const leftColor = ref('#000000')
@@ -85,7 +95,6 @@ load()
       >
         <span
           class="left"
-          @click="submit('left')"
         >
           {{ Math.round(result * 100) }}%
         </span>
@@ -96,7 +105,6 @@ load()
         </span>
         <span
           class="right"
-          @click="submit('right')"
         >
         {{ Math.round((1-result) * 100) }}%
         </span>
